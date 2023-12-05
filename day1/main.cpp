@@ -8,7 +8,16 @@
 // 3. calculate the total value of the sub groups
 // 4. print out the total calories of the largest sub group
 
+int part_one();
+
 int main() {
+
+    std::cout << part_one() << std::endl;
+
+    return 0;
+}
+
+int part_one() {
     std::ifstream inFile("input.txt");
 
     std::vector<int> container;
@@ -39,14 +48,12 @@ int main() {
         }
     } 
 
-    int max;
+    int max = 0;
     for (int i : totalCalories) {
         if (max < i) {
             max = i;
         }
     }
-
-    std::cout << max << std::endl;
     
-    return 0;
+    return max;
 }
