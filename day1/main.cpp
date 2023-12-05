@@ -8,20 +8,22 @@
 // 3. calculate the total value of the sub groups
 // 4. print out the total calories of the largest sub group
 
-int part_one();
+int part_one(std::vector<int>);
+int part_two(std::vector<int>);
+std::vector<int> get_values();
 
 int main() {
 
-    std::cout << part_one() << std::endl;
+    std::vector<int> values = get_values();
+    std::cout << part_one(values) << std::endl;
 
     return 0;
 }
 
-int part_one() {
-    std::ifstream inFile("input.txt");
+std::vector<int> get_values() {
 
+    std::ifstream inFile("input.txt");
     std::vector<int> container;
-    int numElves = 1;
     
     std::string tmp;
     while (std::getline(inFile, tmp)) {
@@ -29,11 +31,23 @@ int part_one() {
             container.push_back(std::stoi(tmp));
         }
         else {
-            numElves++;
             container.push_back(-1);
         }
     }
     inFile.close();
+
+    return container;
+}
+
+int part_one(std::vector<int> container) {
+
+    int numElves = 1;
+
+    for (int n : container) {
+        if (n == -1) {
+            numElves++;
+        }
+    }
 
     int totalCalories[numElves];
     std::fill(&totalCalories[0], &totalCalories[numElves], 0);
@@ -56,4 +70,9 @@ int part_one() {
     }
     
     return max;
+}
+
+int part_two(std::vector<int> container) {
+
+    return 0;
 }
