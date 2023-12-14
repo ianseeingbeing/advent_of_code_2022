@@ -1,22 +1,20 @@
 #include <iostream>
 #include <vector>
+#include <string>
+#include "library.hpp"
 
-int part_one();
-int part_two();
+// rock 1pt
+// paper 2pt
+// scissors 3pt
+// win 6pt
+// draw 3pt
+// lose 0pt
+
+// calculate the total.
 
 int main() {
 
-    std::cout << part_one() << std::endl;
-
-    return 0;
-}
-
-int part_one() {
-
-    return 0;
-}
-
-int part_two() {
+    std::cout << "Main Person" << std::endl;
 
     return 0;
 }
