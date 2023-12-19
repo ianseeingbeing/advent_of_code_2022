@@ -16,21 +16,24 @@ const int ROCK = 1;
 const int PAPER = 2;
 const int SCISSORS = 3;
 const int WIN = 6;
-const int TIE = 3;
-const int LOSS = 0;
+const int DRAW = 3;
+const int LOSE = 0;
 
 void part_one(std::vector<std::vector<char>>);
 void part_two(std::vector<std::vector<char>>);
 std::vector<std::vector<char>> get_input();
 int char_to_val(char);
+std::string find_rps_outcome(char);
 
 int main() {
 
     std::vector<std::vector<char>> rpsInput = get_input();
-    part_one(rpsInput);
+    // part_one(rpsInput);
+    part_two(rpsInput);
 
     return 0;
 }
+
 void part_one(std::vector<std::vector<char>> input) {
 
     int opScore = 0;
@@ -42,23 +45,23 @@ void part_one(std::vector<std::vector<char>> input) {
         int self = char_to_val(vec[1]);
 
         if (op == self) {
-            opScore += TIE + op;
-            selfScore += TIE + self;
+            opScore += DRAW + op;
+            selfScore += DRAW + self;
         }
         else if (op == ROCK && self == SCISSORS) {
             opScore += WIN + op;
-            selfScore += LOSS + self; 
+            selfScore += LOSE + self; 
         }
         else if (op == PAPER && self == ROCK) {
             opScore += WIN + op;
-            selfScore += LOSS + self;
+            selfScore += LOSE + self;
         }
         else if (op == SCISSORS && self == PAPER) {
             opScore += WIN + op;
-            selfScore += LOSS + self;
+            selfScore += LOSE + self;
         }
         else {
-            opScore += LOSS + op;
+            opScore += LOSE + op;
             selfScore += WIN + self;
         }
     }
@@ -67,8 +70,58 @@ void part_one(std::vector<std::vector<char>> input) {
 
 }
 
+// X -> Lose
+// Y -> draw
+// Z -> win
 void part_two(std::vector<std::vector<char>> input) {
 
+    int opScore = 0;
+    int selfScore = 0;
+
+    for (std::vector<char> vec : input) {
+
+        int op = char_to_val(vec[0]);
+        std::string outcome = find_rps_outcome(vec[1]);
+
+        if (outcome == "draw") {
+            opScore += DRAW + op;
+            selfScore += DRAW + op;
+        }
+        else if (outcome == "win") {
+            switch (op) {
+                case ROCK:
+                    opScore += LOSE + op;
+                    selfScore += WIN + PAPER;
+                    break;
+                case PAPER:
+                    opScore += LOSE + op;
+                    selfScore += WIN + SCISSORS;
+                    break;
+                case SCISSORS:
+                    opScore += LOSE + op;
+                    selfScore += WIN + ROCK;
+                    break;
+            }
+        }
+        else if (outcome == "lose") {
+            switch (op) {
+                case ROCK:
+                    opScore += WIN + op;
+                    selfScore += LOSE + SCISSORS;
+                    break;
+                case PAPER:
+                    opScore += WIN + op;
+                    selfScore += LOSE + ROCK;
+                    break;
+                case SCISSORS:
+                    opScore += WIN + op;
+                    selfScore += LOSE + PAPER;
+                    break;
+            }
+        } 
+    }
+
+    std::cout << "Opponent Score: " << opScore << "\nSelf Score: " << selfScore << std::endl;
 }
 
 std::vector<std::vector<char>> get_input() {
@@ -99,4 +152,14 @@ int char_to_val(char input) {
         default: choice = -1;
     }
     return choice;
+}
+
+std::string find_rps_outcome(char input) {
+    std::string outcome = "";
+    switch (input) {
+        case 'X': outcome = "lose"; break;
+        case 'Y': outcome = "draw"; break;
+        case 'Z': outcome = "win"; break;
+    }
+    return outcome;
 }
