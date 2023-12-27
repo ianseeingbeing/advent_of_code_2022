@@ -11,7 +11,8 @@ int get_priotiry(char);
 int main() {
 
     std::vector<std::string> input = get_input();
-    part_one(input);
+    // part_one(input);
+    part_two(input);
 
     return 0;
 }
@@ -43,13 +44,23 @@ void part_one(std::vector<std::string> input) {
 }
 
 void part_two(std::vector<std::string> input) {
+    // compaire groups of three and find an item that is in all the sacks.
+    std::vector<std::vector<std::string>> groups = {};
+
+    for (int i = 0; i < input.size(); i += 3) {
+        groups.push_back({input[i], input[i + 1], input[i + 2]});
+    }
+
+    for (int i = 0; i < groups.size(); i++) {
+        for (int i = 0; )
+    }
 
 }
 
 std::vector<std::string> get_input() {
     std::vector<std::string> input = {};
 
-    std::ifstream inFile("input.txt");
+    std::ifstream inFile("input_sample.txt");
 
     std::string tmp;
     while (inFile >> tmp) {
